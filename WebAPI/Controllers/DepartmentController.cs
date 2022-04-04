@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public JsonResult Get ()
+        public JsonResult Get()
         {
             string query = "select DepartmentId, DepartmentName from dbo.Department";
             DataTable table = new DataTable();
@@ -32,7 +32,7 @@ namespace WebAPI.Controllers
 
             SqlDataReader myReader;
 
-            using(SqlConnection myCon = new SqlConnection(sqlDataSource))
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
             {
                 myCon.Open();
                 using (SqlCommand myCommand = new SqlCommand(query, myCon))
@@ -49,10 +49,10 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public JsonResult Post (Department dep)
+        public JsonResult Post(Department dep)
         {
 
-            string query = "insert into dbo.Department values ('"+dep.DepartmentName+"')";
+            string query = "insert into dbo.Department values ('" + dep.DepartmentName + "')";
             DataTable table = new DataTable();
 
             string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
@@ -81,8 +81,8 @@ namespace WebAPI.Controllers
 
             string query = @"
                        update dbo.Department set
-                       DepartmentName = '"+ dep.DepartmentName + @"'
-                       where DepartmentId = '"+ dep.DepartmentId + @"' 
+                       DepartmentName = '" + dep.DepartmentName + @"'
+                       where DepartmentId = '" + dep.DepartmentId + @"' 
                        ";
             DataTable table = new DataTable();
 
@@ -103,6 +103,36 @@ namespace WebAPI.Controllers
                 }
 
                 return new JsonResult("Updated successfuly!");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public JsonResult Delete(int id)
+        {
+
+            string query = @"
+                       delete from dbo.Department 
+                       where DepartmentId = " + id + @"
+                       ";
+            DataTable table = new DataTable();
+
+            string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
+
+            SqlDataReader myReader;
+
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (SqlCommand myCommand = new SqlCommand(query, myCon))
+                {
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+
+                    myReader.Close();
+                    myCon.Close();
+                }
+
+                return new JsonResult("Deleted successfuly!");
             }
         }
     }
