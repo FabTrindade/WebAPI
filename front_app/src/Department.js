@@ -4,7 +4,10 @@ import {Table} from "react-bootstrap"
 export class Department extends Component{
     constructor(props){
         super(props);
-        this.state = {deps:[]}
+        this.state = {
+            deps:[], 
+            error: null,
+        }
     }
     
     refreshList(){
@@ -12,7 +15,11 @@ export class Department extends Component{
         .then(response => response.json())
         .then(data => {
             this.setState({deps:data});
-        });
+        })
+        .catch(err=>{
+            console.log("Server connection error!");
+            this.setState({error : err});            
+        })
     }
 
     componentDidMount(){
@@ -25,6 +32,14 @@ export class Department extends Component{
 
     render (){
         const {deps}=this.state;
+        if (this.state.error)
+        return (
+            <div>
+                <h1>Server connection error</h1>
+                <p> Error type: {this.state.error.message} </p>
+            </div>
+        )
+
         return(
             <div>
                 <Table className="mt-4" striped bordered hover size="sm">
