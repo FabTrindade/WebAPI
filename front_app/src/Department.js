@@ -1,12 +1,16 @@
 import React, {Component} from "react";
 import {Table} from "react-bootstrap"
 
+import {Button, ButtonToolbar} from 'react-bootstrap';
+import { AddDepModal } from "./AddDepModal";
+
 export class Department extends Component{
     constructor(props){
         super(props);
         this.state = {
             deps:[], 
             error: null,
+            addModalShow: false
         }
     }
     
@@ -32,6 +36,8 @@ export class Department extends Component{
 
     render (){
         const {deps}=this.state;
+        let addModalClose=()=>this.setState({addModalShow: false});
+
         if (this.state.error)
         return (
             <div>
@@ -58,7 +64,18 @@ export class Department extends Component{
                                 <td>Edit / Delete</td>
                             </tr>)}
                     </tbody>
-                </Table>   
+                </Table> 
+
+                <ButtonToolbar>
+                    <Button variant='primary'
+                        onClick ={()=>this.setState({addModalShow:true})}>
+                        Add Department
+                    </Button>
+
+                    <AddDepModal show={this.state.addModalShow}
+                    onHide={addModalClose}>
+                    </AddDepModal>
+                </ButtonToolbar>  
             </div>
         ) 
     }
