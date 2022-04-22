@@ -2,7 +2,7 @@ import { Component } from "react"
 import {Modal, Button, Row, Col, Form, FormGroup, FormLabel, FormControl, ModalFooter} from 'react-bootstrap'
 
 
-export class AddDepModal extends Component{
+export class AddEmpModal extends Component{
     constructor(props){
         super(props);
         this.handleSubmit=this.handleSubmit.bind(this);
@@ -10,15 +10,15 @@ export class AddDepModal extends Component{
 
     handleSubmit(event){
         event.preventDefault();
-        fetch(process.env.REACT_APP_API+'department',{
+        fetch(process.env.REACT_APP_API+'employee',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({
-                //DepartmentId:null,
-                DepartmentName: event.target.DepartmentName.value
+                //EmpartmentId:null,
+                EmployeeName: event.target.EmployeeName.value
             })
         })
         .then(res => res.json())
@@ -43,21 +43,21 @@ export class AddDepModal extends Component{
                 >  
                     <Modal.Header closeButton>
                         <Modal.Title id="conteined-modal-title-vcenter">
-                            Add Department
+                            Add Employee
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Row>
                             <Col sm={6}>
                                 <Form onSubmit = {this.handleSubmit}>
-                                    <FormGroup controlId="DepartmentName">
-                                        <FormLabel>DepartmentName</FormLabel>
-                                        <FormControl type="text" name="DepartmentName" required
-                                        placeholder="DepartmentName"/>                                        
+                                    <FormGroup controlId="EmployeeName">
+                                        <FormLabel>EmployeeName</FormLabel>
+                                        <FormControl type="text" name="EmployeeName" required
+                                        placeholder="EmployeeName"/>                                        
                                     </FormGroup>
                                     <FormGroup>
                                         <Button variant="primary" type="submit">
-                                            Add Department
+                                            Add Employee
                                         </Button>
                                     </FormGroup>
                                 </Form>                                    

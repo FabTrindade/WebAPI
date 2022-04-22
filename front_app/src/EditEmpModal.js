@@ -1,8 +1,8 @@
 import { Component } from "react"
-import {Modal, Button, Row, Col, Form, FormGroup, FormLabel, FormControl, ModalFooter} from 'react-bootstrap'
+import {Modal, Button, Row, Col, Form,  ModalFooter} from 'react-bootstrap'
 
 
-export class AddDepModal extends Component{
+export class EditEmpModal extends Component{
     constructor(props){
         super(props);
         this.handleSubmit=this.handleSubmit.bind(this);
@@ -10,15 +10,15 @@ export class AddDepModal extends Component{
 
     handleSubmit(event){
         event.preventDefault();
-        fetch(process.env.REACT_APP_API+'department',{
-            method:'POST',
+        fetch(process.env.REACT_APP_API+'employee',{
+            method:'PUT',
             headers:{
                 'Accept':'application/json',
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({
-                //DepartmentId:null,
-                DepartmentName: event.target.DepartmentName.value
+                EmployeeId:event.target.EmployeeId.value,
+                EmployeeName: event.target.EmployeeName.value
             })
         })
         .then(res => res.json())
@@ -43,23 +43,31 @@ export class AddDepModal extends Component{
                 >  
                     <Modal.Header closeButton>
                         <Modal.Title id="conteined-modal-title-vcenter">
-                            Add Department
+                            Edit Employee
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Row>
                             <Col sm={6}>
                                 <Form onSubmit = {this.handleSubmit}>
-                                    <FormGroup controlId="DepartmentName">
-                                        <FormLabel>DepartmentName</FormLabel>
-                                        <FormControl type="text" name="DepartmentName" required
-                                        placeholder="DepartmentName"/>                                        
-                                    </FormGroup>
-                                    <FormGroup>
+                                    <Form.Group controlId="EmployeeId">
+                                        <Form.Label>EmployeeId</Form.Label>
+                                        <Form.Control type="text" name="EmployeeId" required
+                                        disabled
+                                        defaultValue={this.props.empid}
+                                        placeholder="EmployeeId"/>                                        
+                                    </Form.Group>
+                                    <Form.Group controlId="EmployeeName">
+                                        <Form.Label>EmployeeName</Form.Label>
+                                        <Form.Control type="text" name="EmployeeName" required
+                                        defaultValue={this.props.empname}
+                                        placeholder="EmployeeName"/>                                        
+                                    </Form.Group>
+                                    <Form.Group>
                                         <Button variant="primary" type="submit">
-                                            Add Department
+                                            Udate Employee
                                         </Button>
-                                    </FormGroup>
+                                    </Form.Group>
                                 </Form>                                    
                             </Col>
                         </Row>
