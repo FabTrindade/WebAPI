@@ -50,7 +50,7 @@ export class Employee extends Component{
 
 
     render (){
-        const {emps, empid, empname}=this.state;
+        const {emps, empid, empname, depmt, photofilename, doj}=this.state;
         let addModalClose=()=>this.setState({addModalShow: false});
         let editModalClose=()=>this.setState({editModalShow: false});
 
@@ -69,6 +69,8 @@ export class Employee extends Component{
                         <tr>
                             <th>EmployeeId</th>
                             <th>EmployeeName</th>
+                            <th>Department</th>
+                            <th>DOJ</th>
                             <th>Options</th>
                         </tr>
                     </thead>
@@ -77,16 +79,28 @@ export class Employee extends Component{
                             <tr key={emp.EmployeeId}>
                                 <td>{emp.EmployeeId}</td>
                                 <td>{emp.EmployeeName}</td>
+                                <td>{emp.Department}</td>
+                                <td>{emp.DateOfJoining}</td>
                                 <td>
                                     <ButtonToolbar>
                                         <Button className="mr-2" variant="info"
-                                        onClick={()=> this.setState({editModalShow:true, empid:emp.EmployeeId, empname:emp.EmployeeName})}>
+                                        onClick={()=> this.setState({
+                                            editModalShow:true, 
+                                            empid:emp.EmployeeId, 
+                                            empname:emp.EmployeeName,
+                                            depmt:emp.Demartment,
+                                            photofilename:emp.PhotoFileName,
+                                            doj:emp.DateOfJoining
+                                            })}>
                                             Edit
                                         </Button>
                                         <EditEmpModal show={this.state.editModalShow}
                                             onHide={editModalClose}
                                             empid={empid}
-                                            empname={empname}/>                                        
+                                            empname={empname}
+                                            depmt={depmt}
+                                            photofilename={photofilename}
+                                            doj={doj}/>                                        
                                     
                                         <Button className="mr-2" variant="danger"
                                         onClick={()=> this.deleteEmp(emp.EmployeeId)}>
