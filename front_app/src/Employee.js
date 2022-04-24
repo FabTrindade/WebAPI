@@ -88,24 +88,25 @@ export class Employee extends Component{
                                             editModalShow:true, 
                                             empid:emp.EmployeeId, 
                                             empname:emp.EmployeeName,
-                                            depmt:emp.Demartment,
+                                            depmt:emp.Department,
                                             photofilename:emp.PhotoFileName,
                                             doj:emp.DateOfJoining
                                             })}>
                                             Edit
                                         </Button>
+                                        
+                                        <Button className="mr-2" variant="danger"
+                                        onClick={()=> this.deleteEmp(emp.EmployeeId)}>
+                                            Delete
+                                        </Button>   
+
                                         <EditEmpModal show={this.state.editModalShow}
                                             onHide={editModalClose}
                                             empid={empid}
                                             empname={empname}
                                             depmt={depmt}
                                             photofilename={photofilename}
-                                            doj={doj}/>                                        
-                                    
-                                        <Button className="mr-2" variant="danger"
-                                        onClick={()=> this.deleteEmp(emp.EmployeeId)}>
-                                            Delete
-                                        </Button>                                    
+                                            doj={doj}/>                                   
                                     </ButtonToolbar>
                                 </td>
                             </tr>)}
